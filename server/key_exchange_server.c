@@ -30,7 +30,7 @@ void handle_client(int client_socket) {
     int encrypted_len = RSA_public_encrypt(AES_KEY_SIZE, aes_key, encrypted, client_rsa, RSA_PKCS1_OAEP_PADDING);
 
     send(client_socket, encrypted, encrypted_len, 0);
-    printf("📤 Encrypted AES key sent to client.\n");
+    printf("Encrypted AES key sent to client.\n");
 
     FILE *aes_fp = fopen("aes_key.bin", "wb");
     fwrite(aes_key, 1, AES_KEY_SIZE, aes_fp);
@@ -52,7 +52,7 @@ int main() {
 
     bind(server_socket, (struct sockaddr*)&server_addr, sizeof(server_addr));
     listen(server_socket, 5);
-    printf("🚀 Key Exchange Server listening on port %d...\n", PORT);
+    printf("Key Exchange Server listening on port %d...\n", PORT);
 
     while (1) {
         client_socket = accept(server_socket, (struct sockaddr*)&client_addr, &addr_size);

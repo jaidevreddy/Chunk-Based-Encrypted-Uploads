@@ -16,7 +16,7 @@ def send_encrypted_file(filename):
 
     s = socket.socket()
     s.connect((SERVER_IP, PORT))
-    print("🌐 Connected to chunk upload server.")
+    print("Connected to chunk upload server.")
 
     # Send filename and chunk info
     s.sendall(f"{os.path.basename(filename)}|{total_chunks}".encode())

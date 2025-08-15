@@ -41,7 +41,7 @@ int main() {
     // Load AES key
     FILE *key_file = fopen(AES_KEY_FILE, "rb");
     if (!key_file) {
-        perror("❌ Failed to open AES key file");
+        perror("Failed to open AES key file");
         return 1;
     }
 
@@ -52,7 +52,7 @@ int main() {
 
     // Socket setup
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
-        perror("❌ socket failed");
+        perror("socket failed");
         exit(EXIT_FAILURE);
     }
 
@@ -67,7 +67,7 @@ int main() {
     while (1) {
         client_fd = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
         if (client_fd < 0) {
-            perror("❌ accept");
+            perror("accept");
             continue;
         }
 
@@ -88,19 +88,19 @@ int main() {
         for (int i = 0; i < total_chunks; i++) {
             unsigned char len_buf[4];
             if (recv_full(client_fd, len_buf, 4) <= 0) {
-                fprintf(stderr, "❌ Failed to receive chunk length\n");
+                fprintf(stderr, "Failed to receive chunk length\n");
                 break;
             }
 
             int chunk_len = (len_buf[0]<<24) | (len_buf[1]<<16) | (len_buf[2]<<8) | len_buf[3];
             if (chunk_len <= 16) {
-                fprintf(stderr, "❌ Invalid chunk length: %d\n", chunk_len);
+                fprintf(stderr, "Invalid chunk length: %d\n", chunk_len);
                 break;
             }
 
             unsigned char *enc_chunk = malloc(chunk_len);
             if (!enc_chunk || recv_full(client_fd, enc_chunk, chunk_len) <= 0) {
-                fprintf(stderr, "❌ Failed to receive chunk data\n");
+                fprintf(stderr, "Failed to receive chunk data\n");
                 free(enc_chunk);
                 break;
             }
@@ -108,7 +108,7 @@ int main() {
             int decrypted_len = chunk_len - 16;
             unsigned char *dec_chunk = malloc(decrypted_len);
             if (!dec_chunk) {
-                fprintf(stderr, "❌ Memory allocation failed for decrypted chunk\n");
+                fprintf(stderr, "Memory allocation failed for decrypted chunk\n");
                 free(enc_chunk);
                 break;
             }
@@ -119,12 +119,12 @@ int main() {
             free(enc_chunk);
             free(dec_chunk);
 
-            printf("✅ Chunk %d/%d decrypted\n", i + 1, total_chunks);
+            printf("Chunk %d/%d decrypted\n", i + 1, total_chunks);
         }
 
         fclose(out);
         close(client_fd);
-        printf("📦 File saved: %s\n🔁 Waiting for next file...\n", output_path);
+        printf("File saved: %s\n🔁 Waiting for next file...\n", output_path);
     }
 
     return 0;

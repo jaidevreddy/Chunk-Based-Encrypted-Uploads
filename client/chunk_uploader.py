@@ -30,7 +30,7 @@ def send_chunks(file_path, aes_key):
     ack = s.recv(2)
 
     if ack != b"OK":
-        print("❌ Server did not acknowledge.")
+        print("Server did not acknowledge.")
         s.close()
         return 0
 
@@ -44,7 +44,7 @@ def send_chunks(file_path, aes_key):
             chunk_len = len(encrypted).to_bytes(4, 'big')
             s.sendall(chunk_len + encrypted)
             chunks_sent += 1
-            print(f"✅ Chunk {chunks_sent}/{total_chunks} sent")
+            print(f"Chunk {chunks_sent}/{total_chunks} sent")
 
     s.close()
     print("📦 File upload complete.")

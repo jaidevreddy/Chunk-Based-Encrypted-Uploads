@@ -30,7 +30,7 @@ def send_encrypted_file(filename):
         print(f"📦 Sent encrypted chunk {i+1}/{total_chunks}")
 
     s.close()
-    print("✅ Encrypted file sent successfully.")
+    print("Encrypted file sent successfully.")
 
 # Example usage
 send_encrypted_file("Project_CP3_NetSec_RVU.pdf")  # replace with your test file

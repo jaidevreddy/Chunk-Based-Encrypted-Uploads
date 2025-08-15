@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 # Replace with your own MongoDB URI
-MONGO_URI = "mongodb+srv://Jaidev:V8VGPn0TMSGEd4vR@cluster0.zpmzs.mongodb.net/?retryWrites=true&w=majority&ssl=true&sslInvalidHostNameAllowed=true"
+MONGO_URI = "PUT_YOUR_MONGODB_URI_HERE"
 client = MongoClient(MONGO_URI)
 db = client["ChunkUploader"]
 users = db["users"]
